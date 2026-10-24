@@ -1,7 +1,10 @@
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
 using AetherDesktop.Core.Models;
 using AetherDesktop.Core.Services;
 
@@ -102,13 +105,17 @@ public partial class MainWindow : Window
 
     private void UpdatePreviewDetails()
     {
-        if (_selectedItem is null)
+        if (_selectedItem is null || !File.Exists(_selectedItem.Path))
         {
             PreviewTitle.Text = "No wallpaper selected";
             PreviewType.Text = "Type: —";
             PreviewPath.Text = "Path: —";
             PreviewStatus.Text = "Status: Select a wallpaper";
             PreviewPlaceholderText.Text = "Preview";
+            PreviewImage.Source = null;
+            PreviewImage.Visibility = Visibility.Collapsed;
+            PreviewPlaceholderText.Visibility = Visibility.Visible;
+            UpdateBackgroundPreview();
             return;
         }
 
@@ -116,7 +123,69 @@ public partial class MainWindow : Window
         PreviewType.Text = $"Type: {_selectedItem.Type}";
         PreviewPath.Text = $"Path: {_selectedItem.Path}";
         PreviewStatus.Text = _selectedItem.IsFavorite ? "Status: Active and in favorites" : "Status: Ready to apply";
-        PreviewPlaceholderText.Text = _selectedItem.Type.ToString();
+
+        if (_selectedItem.Type == WallpaperType.Image)
+        {
+            try
+            {
+                var bitmap = new BitmapImage();
+                bitmap.BeginInit();
+                bitmap.UriSource = new Uri(_selectedItem.Path, UriKind.Absolute);
+                bitmap.CacheOption = BitmapCacheOption.OnLoad;
+                bitmap.DecodePixelWidth = 640;
+                bitmap.EndInit();
+                bitmap.Freeze();
+
+                PreviewImage.Source = bitmap;
+                PreviewImage.Visibility = Visibility.Visible;
+                PreviewPlaceholderText.Visibility = Visibility.Collapsed;
+            }
+            catch
+            {
+                PreviewImage.Source = null;
+                PreviewImage.Visibility = Visibility.Collapsed;
+                PreviewPlaceholderText.Visibility = Visibility.Visible;
+                PreviewPlaceholderText.Text = "Preview unavailable";
+            }
+        }
+        else
+        {
+            PreviewImage.Source = null;
+            PreviewImage.Visibility = Visibility.Collapsed;
+            PreviewPlaceholderText.Visibility = Visibility.Visible;
+            PreviewPlaceholderText.Text = _selectedItem.Type.ToString();
+        }
+
+        UpdateBackgroundPreview();
+    }
+
+    private void UpdateBackgroundPreview()
+    {
+        if (_selectedItem is null || !File.Exists(_selectedItem.Path) || _selectedItem.Type != WallpaperType.Image)
+        {
+            WallpaperBackground.Background = new SolidColorBrush(Color.FromRgb(18, 24, 38));
+            return;
+        }
+
+        try
+        {
+            var bitmap = new BitmapImage();
+            bitmap.BeginInit();
+            bitmap.UriSource = new Uri(_selectedItem.Path, UriKind.Absolute);
+            bitmap.CacheOption = BitmapCacheOption.OnLoad;
+            bitmap.EndInit();
+            bitmap.Freeze();
+
+            WallpaperBackground.Background = new ImageBrush(bitmap)
+            {
+                Stretch = Stretch.UniformToFill,
+                Opacity = 0.38
+            };
+        }
+        catch
+        {
+            WallpaperBackground.Background = new SolidColorBrush(Color.FromRgb(18, 24, 38));
+        }
     }
 
     private void SearchTextBox_TextChanged(object sender, TextChangedEventArgs e)
