@@ -117,12 +117,18 @@
 
                 <Border Grid.Column="1" Background="#1C2433" CornerRadius="14" Padding="18" Margin="18,0,0,0">
                     <StackPanel>
-                        <TextBlock Text="System status" Foreground="#F4F6FA" FontWeight="SemiBold" FontSize="20" Margin="0,0,0,12" />
-                        <TextBlock Text="Performance mode: Balanced" Foreground="#D7DEEE" Margin="0,0,0,8" />
-                        <TextBlock Text="Displays: 2 connected" Foreground="#D7DEEE" Margin="0,0,0,8" />
-                        <TextBlock Text="Playback: Active" Foreground="#D7DEEE" Margin="0,0,0,8" />
-                        <TextBlock Text="Preview: Ready" Foreground="#D7DEEE" Margin="0,0,0,8" />
-                        <TextBlock x:Name="LastUpdateText" Text="Last update: just now" Foreground="#D7DEEE" />
+                        <TextBlock Text="Preview details" Foreground="#F4F6FA" FontWeight="SemiBold" FontSize="20" Margin="0,0,0,12" />
+
+                        <Border Height="180" Background="#202B3C" CornerRadius="12" Margin="0,0,0,12">
+                            <TextBlock x:Name="PreviewPlaceholderText" Text="Preview" Foreground="#A8B5CF" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Border>
+
+                        <TextBlock x:Name="PreviewTitle" Text="No wallpaper selected" Foreground="#F4F6FA" FontSize="18" FontWeight="SemiBold" TextWrapping="Wrap" />
+                        <TextBlock x:Name="PreviewType" Text="Type: —" Foreground="#D7DEEE" Margin="0,8,0,0" />
+                        <TextBlock x:Name="PreviewPath" Text="Path: —" Foreground="#D7DEEE" Margin="0,6,0,0" TextWrapping="Wrap" />
+                        <TextBlock x:Name="PreviewStatus" Text="Status: Select a wallpaper" Foreground="#A8B5CF" Margin="0,12,0,0" />
+
+                        <Button Content="Apply wallpaper" Style="{StaticResource PrimaryButtonStyle}" Click="ApplyWallpaper_Click" Margin="0,18,0,0" />
                     </StackPanel>
                 </Border>
             </Grid>

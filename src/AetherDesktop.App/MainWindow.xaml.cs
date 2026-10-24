@@ -65,18 +65,7 @@ public partial class MainWindow : Window
             IsSelected = _selectedItem != null && item.Id == _selectedItem.Id
         }).ToList();
 
-        if (_selectedItem is not null)
-        {
-            NowPlayingText.Text = _selectedItem.Title;
-        }
-        else if (items.Count > 0)
-        {
-            NowPlayingText.Text = items[0].Title;
-        }
-        else
-        {
-            NowPlayingText.Text = "No wallpaper loaded";
-        }
+        UpdatePreviewDetails();
 
         LibraryHeaderText.Text = _currentSection switch
         {
@@ -109,6 +98,25 @@ public partial class MainWindow : Window
             "Import" => new List<WallpaperLibraryItem>(),
             _ => items
         };
+    }
+
+    private void UpdatePreviewDetails()
+    {
+        if (_selectedItem is null)
+        {
+            PreviewTitle.Text = "No wallpaper selected";
+            PreviewType.Text = "Type: —";
+            PreviewPath.Text = "Path: —";
+            PreviewStatus.Text = "Status: Select a wallpaper";
+            PreviewPlaceholderText.Text = "Preview";
+            return;
+        }
+
+        PreviewTitle.Text = _selectedItem.Title;
+        PreviewType.Text = $"Type: {_selectedItem.Type}";
+        PreviewPath.Text = $"Path: {_selectedItem.Path}";
+        PreviewStatus.Text = "Status: Ready to apply";
+        PreviewPlaceholderText.Text = _selectedItem.Type.ToString();
     }
 
     private void SearchTextBox_TextChanged(object sender, TextChangedEventArgs e)
@@ -157,8 +165,26 @@ public partial class MainWindow : Window
             return;
         }
 
-        _selectedItem = _libraryService.Items.FirstOrDefault(x => x.Id == item.Id);
+        var selected = _libraryService.Items.FirstOrDefault(x => x.Id == item.Id);
+        if (selected is null)
+        {
+            return;
+        }
+
+        _selectedItem = selected;
         RefreshLibrary();
+    }
+
+    private void ApplyWallpaper_Click(object sender, RoutedEventArgs e)
+    {
+        if (_selectedItem is null)
+        {
+            PreviewStatus.Text = "Status: No wallpaper selected";
+            return;
+        }
+
+        PreviewStatus.Text = $"Status: Applied '{_selectedItem.Title}'";
+        NowPlayingText.Text = _selectedItem.Title;
     }
 
     private sealed class WallpaperListItemViewModel
