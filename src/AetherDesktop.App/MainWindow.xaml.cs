@@ -4,7 +4,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
+using AetherDesktop.App.Services;
 using AetherDesktop.Core.Models;
 using AetherDesktop.Core.Services;
 
@@ -126,21 +126,14 @@ public partial class MainWindow : Window
 
         if (_selectedItem.Type == WallpaperType.Image)
         {
-            try
+            var image = WallpaperBackgroundService.LoadPreviewImage(_selectedItem.Path, 640);
+            if (image is not null)
             {
-                var bitmap = new BitmapImage();
-                bitmap.BeginInit();
-                bitmap.UriSource = new Uri(_selectedItem.Path, UriKind.Absolute);
-                bitmap.CacheOption = BitmapCacheOption.OnLoad;
-                bitmap.DecodePixelWidth = 640;
-                bitmap.EndInit();
-                bitmap.Freeze();
-
-                PreviewImage.Source = bitmap;
+                PreviewImage.Source = image;
                 PreviewImage.Visibility = Visibility.Visible;
                 PreviewPlaceholderText.Visibility = Visibility.Collapsed;
             }
-            catch
+            else
             {
                 PreviewImage.Source = null;
                 PreviewImage.Visibility = Visibility.Collapsed;
@@ -167,25 +160,7 @@ public partial class MainWindow : Window
             return;
         }
 
-        try
-        {
-            var bitmap = new BitmapImage();
-            bitmap.BeginInit();
-            bitmap.UriSource = new Uri(_selectedItem.Path, UriKind.Absolute);
-            bitmap.CacheOption = BitmapCacheOption.OnLoad;
-            bitmap.EndInit();
-            bitmap.Freeze();
-
-            WallpaperBackground.Background = new ImageBrush(bitmap)
-            {
-                Stretch = Stretch.UniformToFill,
-                Opacity = 0.38
-            };
-        }
-        catch
-        {
-            WallpaperBackground.Background = new SolidColorBrush(Color.FromRgb(18, 24, 38));
-        }
+        WallpaperBackground.Background = WallpaperBackgroundService.CreateBackgroundBrush(_selectedItem.Path);
     }
 
     private void SearchTextBox_TextChanged(object sender, TextChangedEventArgs e)
