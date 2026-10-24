@@ -1,0 +1,33 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AetherDesktop.App", "src\AetherDesktop.App\AetherDesktop.App.csproj", "{38C2BB58-8CAA-46D9-916F-2FC372D1E9D2}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AetherDesktop.Core", "src\AetherDesktop.Core\AetherDesktop.Core.csproj", "{6C9D5CB1-8D39-4D9A-A90F-1D2A5F0D1900}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AetherDesktop.Core.Tests", "tests\AetherDesktop.Core.Tests\AetherDesktop.Core.Tests.csproj", "{17AA00FA-DBAE-42C8-B179-8DAB6E7BDF39}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{38C2BB58-8CAA-46D9-916F-2FC372D1E9D2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{38C2BB58-8CAA-46D9-916F-2FC372D1E9D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{38C2BB58-8CAA-46D9-916F-2FC372D1E9D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{38C2BB58-8CAA-46D9-916F-2FC372D1E9D2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6C9D5CB1-8D39-4D9A-A90F-1D2A5F0D1900}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6C9D5CB1-8D39-4D9A-A90F-1D2A5F0D1900}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6C9D5CB1-8D39-4D9A-A90F-1D2A5F0D1900}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6C9D5CB1-8D39-4D9A-A90F-1D2A5F0D1900}.Release|Any CPU.Build.0 = Release|Any CPU
+		{17AA00FA-DBAE-42C8-B179-8DAB6E7BDF39}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{17AA00FA-DBAE-42C8-B179-8DAB6E7BDF39}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{17AA00FA-DBAE-42C8-B179-8DAB6E7BDF39}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{17AA00FA-DBAE-42C8-B179-8DAB6E7BDF39}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

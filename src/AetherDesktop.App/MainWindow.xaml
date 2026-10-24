@@ -1,0 +1,87 @@
+<Window x:Class="AetherDesktop.App.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Aether Desktop"
+        Width="1280"
+        Height="760"
+        MinWidth="960"
+        MinHeight="640"
+        WindowStartupLocation="CenterScreen"
+        Background="#121826">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="220" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <Border Grid.Column="0" Background="#1B2333" Padding="18">
+            <StackPanel>
+                <TextBlock Text="AETHER" Foreground="#EDEFF8" FontSize="24" FontWeight="Bold" Margin="0,0,0,18" />
+
+                <Button Content="Library" Style="{StaticResource SidebarButtonStyle}" />
+                <Button Content="Installed" Style="{StaticResource SidebarButtonStyle}" />
+                <Button Content="Favorites" Style="{StaticResource SidebarButtonStyle}" />
+                <Button Content="Playlists" Style="{StaticResource SidebarButtonStyle}" />
+                <Button Content="Displays" Style="{StaticResource SidebarButtonStyle}" />
+                <Button Content="Settings" Style="{StaticResource SidebarButtonStyle}" />
+                <Button Content="Import" Style="{StaticResource SidebarButtonStyle}" />
+            </StackPanel>
+        </Border>
+
+        <Grid Grid.Column="1" Margin="24">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <TextBox Grid.Column="0" Height="36" Text="Search wallpapers" Margin="0,0,12,0" />
+                <Button Grid.Column="1" Width="160" Content="Open Library Folder" Style="{StaticResource PrimaryButtonStyle}" />
+            </Grid>
+
+            <Border Grid.Row="1" Margin="0,18,0,0" Background="#1F2A3F" CornerRadius="12" Padding="16">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Now playing: " Foreground="#A8B5CF" FontSize="14" />
+                    <TextBlock Text="Aurora Drift" Foreground="#F0F4FF" FontSize="14" FontWeight="SemiBold" />
+                    <TextBlock Text=" • 1080p • 4K ready" Foreground="#8CA7D9" Margin="12,0,0,0" FontSize="12" VerticalAlignment="Center" />
+                </StackPanel>
+            </Border>
+
+            <Grid Grid.Row="2" Margin="0,18,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*" />
+                    <ColumnDefinition Width="1*" />
+                </Grid.ColumnDefinitions>
+
+                <Border Grid.Column="0" Background="#1C2433" CornerRadius="14" Padding="18">
+                    <StackPanel>
+                        <TextBlock Text="Wallpaper library" Foreground="#F4F6FA" FontWeight="SemiBold" FontSize="22" Margin="0,0,0,18" />
+                        <WrapPanel>
+                            <Border Width="180" Height="120" Background="#2A3548" CornerRadius="10" Margin="0,0,12,12" />
+                            <Border Width="180" Height="120" Background="#2A3548" CornerRadius="10" Margin="0,0,12,12" />
+                            <Border Width="180" Height="120" Background="#2A3548" CornerRadius="10" Margin="0,0,12,12" />
+                            <Border Width="180" Height="120" Background="#2A3548" CornerRadius="10" Margin="0,0,12,12" />
+                        </WrapPanel>
+                    </StackPanel>
+                </Border>
+
+                <Border Grid.Column="1" Background="#1C2433" CornerRadius="14" Padding="18" Margin="18,0,0,0">
+                    <StackPanel>
+                        <TextBlock Text="System status" Foreground="#F4F6FA" FontWeight="SemiBold" FontSize="20" Margin="0,0,0,12" />
+                        <TextBlock Text="Performance mode: Balanced" Foreground="#D7DEEE" Margin="0,0,0,8" />
+                        <TextBlock Text="Displays: 2 connected" Foreground="#D7DEEE" Margin="0,0,0,8" />
+                        <TextBlock Text="Playback: Active" Foreground="#D7DEEE" Margin="0,0,0,8" />
+                        <TextBlock Text="Preview: Ready" Foreground="#D7DEEE" Margin="0,0,0,8" />
+                        <TextBlock Text="Last update: just now" Foreground="#D7DEEE" />
+                    </StackPanel>
+                </Border>
+            </Grid>
+        </Grid>
+    </Grid>
+</Window>
