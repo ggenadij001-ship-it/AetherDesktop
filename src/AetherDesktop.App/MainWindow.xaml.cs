@@ -11,6 +11,7 @@ public partial class MainWindow : Window
 {
     private readonly WallpaperLibraryService _libraryService;
     private string _currentSection = "Library";
+    private WallpaperLibraryItem? _selectedItem;
 
     public MainWindow()
     {
@@ -48,14 +49,27 @@ public partial class MainWindow : Window
 
             _libraryService.AddFile(samplePath);
         }
+
+        _selectedItem = _libraryService.Items.FirstOrDefault();
     }
 
     private void RefreshLibrary()
     {
         var items = GetVisibleItems();
-        WallpaperItemsControl.ItemsSource = items;
+        WallpaperItemsControl.ItemsSource = items.Select(item => new WallpaperListItemViewModel
+        {
+            Id = item.Id,
+            Title = item.Title,
+            Path = item.Path,
+            Type = item.Type,
+            IsSelected = _selectedItem != null && item.Id == _selectedItem.Id
+        }).ToList();
 
-        if (items.Count > 0)
+        if (_selectedItem is not null)
+        {
+            NowPlayingText.Text = _selectedItem.Title;
+        }
+        else if (items.Count > 0)
         {
             NowPlayingText.Text = items[0].Title;
         }
@@ -129,5 +143,30 @@ public partial class MainWindow : Window
 
         _currentSection = button.Tag?.ToString() ?? "Library";
         RefreshLibrary();
+    }
+
+    private void WallpaperCard_Click(object sender, RoutedEventArgs e)
+    {
+        if (sender is not Border border)
+        {
+            return;
+        }
+
+        if (border.DataContext is not WallpaperListItemViewModel item)
+        {
+            return;
+        }
+
+        _selectedItem = _libraryService.Items.FirstOrDefault(x => x.Id == item.Id);
+        RefreshLibrary();
+    }
+
+    private sealed class WallpaperListItemViewModel
+    {
+        public Guid Id { get; set; }
+        public string Title { get; set; } = string.Empty;
+        public string Path { get; set; } = string.Empty;
+        public WallpaperType Type { get; set; }
+        public bool IsSelected { get; set; }
     }
 }
