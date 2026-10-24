@@ -41,14 +41,14 @@
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
 
-                <TextBox Grid.Column="0" Height="36" Text="Search wallpapers" Margin="0,0,12,0" />
-                <Button Grid.Column="1" Width="160" Content="Open Library Folder" Style="{StaticResource PrimaryButtonStyle}" />
+                <TextBox x:Name="SearchTextBox" Grid.Column="0" Height="36" Margin="0,0,12,0" TextChanged="SearchTextBox_TextChanged" />
+                <Button Grid.Column="1" Width="160" Content="Open Library Folder" Style="{StaticResource PrimaryButtonStyle}" Click="OpenLibraryFolder_Click" />
             </Grid>
 
             <Border Grid.Row="1" Margin="0,18,0,0" Background="#1F2A3F" CornerRadius="12" Padding="16">
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="Now playing: " Foreground="#A8B5CF" FontSize="14" />
-                    <TextBlock Text="Aurora Drift" Foreground="#F0F4FF" FontSize="14" FontWeight="SemiBold" />
+                    <TextBlock x:Name="NowPlayingText" Foreground="#F0F4FF" FontSize="14" FontWeight="SemiBold" />
                     <TextBlock Text=" • 1080p • 4K ready" Foreground="#8CA7D9" Margin="12,0,0,0" FontSize="12" VerticalAlignment="Center" />
                 </StackPanel>
             </Border>
@@ -60,15 +60,43 @@
                 </Grid.ColumnDefinitions>
 
                 <Border Grid.Column="0" Background="#1C2433" CornerRadius="14" Padding="18">
-                    <StackPanel>
-                        <TextBlock Text="Wallpaper library" Foreground="#F4F6FA" FontWeight="SemiBold" FontSize="22" Margin="0,0,0,18" />
-                        <WrapPanel>
-                            <Border Width="180" Height="120" Background="#2A3548" CornerRadius="10" Margin="0,0,12,12" />
-                            <Border Width="180" Height="120" Background="#2A3548" CornerRadius="10" Margin="0,0,12,12" />
-                            <Border Width="180" Height="120" Background="#2A3548" CornerRadius="10" Margin="0,0,12,12" />
-                            <Border Width="180" Height="120" Background="#2A3548" CornerRadius="10" Margin="0,0,12,12" />
-                        </WrapPanel>
-                    </StackPanel>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+
+                        <TextBlock Grid.Row="0" Text="Wallpaper library" Foreground="#F4F6FA" FontWeight="SemiBold" FontSize="22" Margin="0,0,0,18" />
+
+                        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+                            <ItemsControl x:Name="WallpaperItemsControl">
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <WrapPanel />
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <Border Width="180" Height="120" Background="#2A3548" CornerRadius="10" Margin="0,0,12,12" Padding="8">
+                                            <Grid>
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="*" />
+                                                    <RowDefinition Height="Auto" />
+                                                </Grid.RowDefinitions>
+
+                                                <Border Background="#1C2433" CornerRadius="8" Opacity="0.8" />
+                                                <TextBlock Grid.Row="1"
+                                                           Text="{Binding Title}"
+                                                           Foreground="#F4F6FA"
+                                                           FontSize="12"
+                                                           TextTrimming="CharacterEllipsis" />
+                                            </Grid>
+                                        </Border>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </ScrollViewer>
+                    </Grid>
                 </Border>
 
                 <Border Grid.Column="1" Background="#1C2433" CornerRadius="14" Padding="18" Margin="18,0,0,0">
@@ -78,7 +106,7 @@
                         <TextBlock Text="Displays: 2 connected" Foreground="#D7DEEE" Margin="0,0,0,8" />
                         <TextBlock Text="Playback: Active" Foreground="#D7DEEE" Margin="0,0,0,8" />
                         <TextBlock Text="Preview: Ready" Foreground="#D7DEEE" Margin="0,0,0,8" />
-                        <TextBlock Text="Last update: just now" Foreground="#D7DEEE" />
+                        <TextBlock x:Name="LastUpdateText" Text="Last update: just now" Foreground="#D7DEEE" />
                     </StackPanel>
                 </Border>
             </Grid>
