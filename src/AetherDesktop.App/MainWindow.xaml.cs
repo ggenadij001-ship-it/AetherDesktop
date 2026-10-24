@@ -115,7 +115,7 @@ public partial class MainWindow : Window
         PreviewTitle.Text = _selectedItem.Title;
         PreviewType.Text = $"Type: {_selectedItem.Type}";
         PreviewPath.Text = $"Path: {_selectedItem.Path}";
-        PreviewStatus.Text = "Status: Ready to apply";
+        PreviewStatus.Text = _selectedItem.IsFavorite ? "Status: Active and in favorites" : "Status: Ready to apply";
         PreviewPlaceholderText.Text = _selectedItem.Type.ToString();
     }
 
@@ -183,8 +183,10 @@ public partial class MainWindow : Window
             return;
         }
 
+        _selectedItem.IsFavorite = true;
         PreviewStatus.Text = $"Status: Applied '{_selectedItem.Title}'";
         NowPlayingText.Text = _selectedItem.Title;
+        RefreshLibrary();
     }
 
     private sealed class WallpaperListItemViewModel
