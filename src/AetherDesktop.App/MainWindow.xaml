@@ -127,6 +127,7 @@
                         <TextBlock x:Name="PreviewType" Text="Type: —" Foreground="#D7DEEE" Margin="0,8,0,0" />
                         <TextBlock x:Name="PreviewPath" Text="Path: —" Foreground="#D7DEEE" Margin="0,6,0,0" TextWrapping="Wrap" />
                         <TextBlock x:Name="PreviewStatus" Text="Status: Select a wallpaper" Foreground="#A8B5CF" Margin="0,12,0,0" />
+                        <TextBlock x:Name="LastUpdateText" Text="Last update: just now" Foreground="#D7DEEE" Margin="0,12,0,0" />
 
                         <Button Content="Apply wallpaper" Style="{StaticResource PrimaryButtonStyle}" Click="ApplyWallpaper_Click" Margin="0,18,0,0" />
                     </StackPanel>
