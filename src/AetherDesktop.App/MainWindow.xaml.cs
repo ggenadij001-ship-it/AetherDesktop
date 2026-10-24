@@ -228,7 +228,19 @@ public partial class MainWindow : Window
         }
 
         _selectedItem.IsFavorite = true;
-        PreviewStatus.Text = $"Status: Applied '{_selectedItem.Title}'";
+
+        if (_selectedItem.Type == WallpaperType.Image)
+        {
+            var applied = WallpaperDesktopService.SetWallpaper(_selectedItem.Path);
+            PreviewStatus.Text = applied
+                ? $"Status: Applied '{_selectedItem.Title}' to desktop"
+                : $"Status: Selected '{_selectedItem.Title}' (desktop update failed)";
+        }
+        else
+        {
+            PreviewStatus.Text = $"Status: '{_selectedItem.Title}' queued for video preview only";
+        }
+
         NowPlayingText.Text = _selectedItem.Title;
         RefreshLibrary();
     }
