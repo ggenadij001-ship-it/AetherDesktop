@@ -1,4 +1,5 @@
 using System.Text.Json;
+using AetherDesktop.Core.Models;
 
 namespace AetherDesktop.Core.Configuration;
 
