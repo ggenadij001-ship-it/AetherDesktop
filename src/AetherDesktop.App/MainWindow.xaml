@@ -18,13 +18,13 @@
             <StackPanel>
                 <TextBlock Text="AETHER" Foreground="#EDEFF8" FontSize="24" FontWeight="Bold" Margin="0,0,0,18" />
 
-                <Button Content="Library" Style="{StaticResource SidebarButtonStyle}" />
-                <Button Content="Installed" Style="{StaticResource SidebarButtonStyle}" />
-                <Button Content="Favorites" Style="{StaticResource SidebarButtonStyle}" />
-                <Button Content="Playlists" Style="{StaticResource SidebarButtonStyle}" />
-                <Button Content="Displays" Style="{StaticResource SidebarButtonStyle}" />
-                <Button Content="Settings" Style="{StaticResource SidebarButtonStyle}" />
-                <Button Content="Import" Style="{StaticResource SidebarButtonStyle}" />
+                <Button x:Name="LibraryButton" Content="Library" Style="{StaticResource SidebarButtonStyle}" Click="SidebarButton_Click" Tag="Library" />
+                <Button x:Name="InstalledButton" Content="Installed" Style="{StaticResource SidebarButtonStyle}" Click="SidebarButton_Click" Tag="Installed" />
+                <Button x:Name="FavoritesButton" Content="Favorites" Style="{StaticResource SidebarButtonStyle}" Click="SidebarButton_Click" Tag="Favorites" />
+                <Button x:Name="PlaylistsButton" Content="Playlists" Style="{StaticResource SidebarButtonStyle}" Click="SidebarButton_Click" Tag="Playlists" />
+                <Button x:Name="DisplaysButton" Content="Displays" Style="{StaticResource SidebarButtonStyle}" Click="SidebarButton_Click" Tag="Displays" />
+                <Button x:Name="SettingsButton" Content="Settings" Style="{StaticResource SidebarButtonStyle}" Click="SidebarButton_Click" Tag="Settings" />
+                <Button x:Name="ImportButton" Content="Import" Style="{StaticResource SidebarButtonStyle}" Click="SidebarButton_Click" Tag="Import" />
             </StackPanel>
         </Border>
 
@@ -66,7 +66,7 @@
                             <RowDefinition Height="*" />
                         </Grid.RowDefinitions>
 
-                        <TextBlock Grid.Row="0" Text="Wallpaper library" Foreground="#F4F6FA" FontWeight="SemiBold" FontSize="22" Margin="0,0,0,18" />
+                        <TextBlock x:Name="LibraryHeaderText" Grid.Row="0" Text="Wallpaper library" Foreground="#F4F6FA" FontWeight="SemiBold" FontSize="22" Margin="0,0,0,18" />
 
                         <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
                             <ItemsControl x:Name="WallpaperItemsControl">

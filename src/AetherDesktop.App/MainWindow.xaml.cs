@@ -10,6 +10,7 @@ namespace AetherDesktop.App;
 public partial class MainWindow : Window
 {
     private readonly WallpaperLibraryService _libraryService;
+    private string _currentSection = "Library";
 
     public MainWindow()
     {
@@ -51,7 +52,7 @@ public partial class MainWindow : Window
 
     private void RefreshLibrary()
     {
-        var items = _libraryService.Items;
+        var items = GetVisibleItems();
         WallpaperItemsControl.ItemsSource = items;
 
         if (items.Count > 0)
@@ -63,14 +64,42 @@ public partial class MainWindow : Window
             NowPlayingText.Text = "No wallpaper loaded";
         }
 
+        LibraryHeaderText.Text = _currentSection switch
+        {
+            "Library" => "Wallpaper library",
+            "Installed" => "Installed wallpapers",
+            "Favorites" => "Favorites",
+            "Playlists" => "Playlists",
+            "Displays" => "Displays",
+            "Settings" => "Settings",
+            "Import" => "Import",
+            _ => "Wallpaper library"
+        };
+
         LastUpdateText.Text = $"Last update: {DateTime.Now:HH:mm}";
+    }
+
+    private IReadOnlyList<WallpaperLibraryItem> GetVisibleItems()
+    {
+        var query = SearchTextBox.Text ?? string.Empty;
+        var items = _libraryService.Search(query);
+
+        return _currentSection switch
+        {
+            "Library" => items,
+            "Installed" => items,
+            "Favorites" => items.Where(x => x.IsFavorite).ToList(),
+            "Playlists" => items.Where(x => x.Type == WallpaperType.Video || x.Type == WallpaperType.Image).ToList(),
+            "Displays" => items,
+            "Settings" => new List<WallpaperLibraryItem>(),
+            "Import" => new List<WallpaperLibraryItem>(),
+            _ => items
+        };
     }
 
     private void SearchTextBox_TextChanged(object sender, TextChangedEventArgs e)
     {
-        var query = SearchTextBox.Text ?? string.Empty;
-        var filtered = _libraryService.Search(query);
-        WallpaperItemsControl.ItemsSource = filtered;
+        RefreshLibrary();
     }
 
     private void OpenLibraryFolder_Click(object sender, RoutedEventArgs e)
@@ -89,5 +118,16 @@ public partial class MainWindow : Window
             FileName = appDataFolder,
             UseShellExecute = true
         });
+    }
+
+    private void SidebarButton_Click(object sender, RoutedEventArgs e)
+    {
+        if (sender is not Button button)
+        {
+            return;
+        }
+
+        _currentSection = button.Tag?.ToString() ?? "Library";
+        RefreshLibrary();
     }
 }
